@@ -1,3 +1,5 @@
+console.log("Ethers.js version:", ethers.version);
+
 document.addEventListener("DOMContentLoaded", () => {
     const pairName = document.getElementById("pair-name");
     const pairPrice = document.getElementById("pair-price");
