@@ -1,4 +1,10 @@
 console.log("Ethers.js version:", ethers.version);
+if (typeof ethers === "undefined") {
+    console.error("Ethers.js is not loaded!");
+} else {
+    console.log("Ethers.js version:", ethers.version);
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const pairName = document.getElementById("pair-name");
