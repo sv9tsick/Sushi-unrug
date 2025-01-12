@@ -47,7 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function connectWallet() {
-        if (window.ethereum) {
+        if (typeof window.ethereum === 'undefined') {
+    alert("MetaMask is not installed. Please install it to connect your wallet.");
+    return;
+}
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 await provider.send("eth_requestAccounts", []);
