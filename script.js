@@ -47,18 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function connectWallet() {
-        if (typeof window.ethereum === 'undefined') {
-    alert("MetaMask is not installed. Please install it to connect your wallet.");
-    return;
-}
+        if (window.ethereum) {
             try {
+                console.log("Requesting wallet connection...");
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const { chainId } = await provider.getNetwork();
+
+                // Check if on Metis Andromeda (chainId: 1088)
+                if (chainId !== 1088) {
+                    alert("Please switch to the Metis Andromeda network in MetaMask.");
+                    return;
+                }
+
                 await provider.send("eth_requestAccounts", []);
                 const signer = provider.getSigner();
                 const userAddress = await signer.getAddress();
                 alert(`Wallet connected: ${userAddress}`);
             } catch (error) {
-                console.error("Wallet connection failed:", error);
+                console.error("Error connecting wallet:", error.message);
+                alert("Wallet connection failed. Check the console for more details.");
             }
         } else {
             alert("MetaMask not found! Please install it.");
